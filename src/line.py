@@ -1,5 +1,5 @@
 import math
-from point import Point
+from src.point import Point
 
 class Line:
     def __init__(self, k: float, b: float):
