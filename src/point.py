@@ -6,18 +6,22 @@ class Point:
     _Point__y = float()
 
     def __init__(self, x: float, y: float):
-        pass
+        self.__x = x
+        self._Point__y = y
     
     def __str__(self):
-        pass
+        return f"({self.__x}; {self._Point__y})"
     
     def __eq__(self, other):
-        pass
+        if not isinstance(other, Point):
+            return False
+        return self.__x == other.__x and self._Point__y == other._Point__y
 
     @staticmethod
     def dist(A, B):
-        pass
+        return math.sqrt((A.__x - B.__x)**2 + (A.__y - B.__y)**2)
     
     @staticmethod
     def center(A, B):
-        pass
+        C = Point((A.__x + B.__x) / 2, (A.__y + B.__y) / 2)
+        return C
