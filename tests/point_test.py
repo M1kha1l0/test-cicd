@@ -1,7 +1,7 @@
 import unittest
 import math
 
-from point import Point
+from src.point import Point
 
 class PointTestCase(unittest.TestCase):
     def test_distance(self):

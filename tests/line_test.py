@@ -1,8 +1,8 @@
 import unittest
 import math
 
-from line import Line
-from point import Point
+from src.line import Line
+from src.point import Point
 
 class LineTestCase(unittest.TestCase):
     def test_equal(self):
