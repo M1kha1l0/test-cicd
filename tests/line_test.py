@@ -1,55 +1,46 @@
 import unittest
 import math
 
-from point import Point
+from src.line import Line
+from src.point import Point
 
-class PointTestCase(unittest.TestCase):
-    def test_distance(self):
-        a = Point(1, 1)
-        b = Point(4, 3)
-        self.assertAlmostEqual(Point.dist(a, b), 3.6055, delta=0.0001)
-
-    def test_points_on_line_x_distance(self):
-        a = Point(1, 1)
-        b = Point(1, 4)
-        self.assertEqual(Point.dist(a, b), 3)
-
-    def test_points_on_line_y_distance(self):
-        a = Point(1, 4)
-        b = Point(6, 4)
-        self.assertEqual(Point.dist(a, b), 5)
-
-    def test_null_distance(self):
-        a = Point(1, 1)
-        self.assertEqual(Point.dist(a, a), 0)
+class LineTestCase(unittest.TestCase):
+    def test_equal(self):
+        f = Line.from_points(Point(0, 0), Point(1, 2))
+        g = Line(2, 0)
+        h = Line(2, 1)
+        self.assertEqual(f, g)
+        self.assertNotEqual(f, h)
+        self.assertNotEqual(g, h)
     
-    def test_equal_int(self):
-        a = Point(1, 1)
-        self.assertEqual(a, Point(1, 1))
+    def test_not_null_str(self):
+        f = Line.from_points(Point(0, 0), Point(1, 2))
+        g = Line(2, 0)
+        self.assertTrue(str(f) != "") 
+        self.assertTrue(str(g) != "")
 
-    def test_equal_float(self):
-        a = Point(1.12, 1.2)
-        self.assertEqual(a, Point(1.12, 1.2))
+    def test_on_line(self):
+        f = Line.from_points(Point(0, 0), Point(1, 2))
+        self.assertTrue(f.contains(Point(2, 4)))
+        self.assertTrue(f.contains(Point(-2, -4)))
+        self.assertFalse(f.contains(Point(1, 0)))
 
-    def test_center(self):
-        a = Point(1, 1)
-        b = Point(4, 3)
-        self.assertEqual(Point.center(a, b), Point(2.5, 2))
-    
-    def test_center_in_point(self):
-        a = Point(1, 2)
-        self.assertEqual(Point.center(a, a), a)
+    def test_calc_y(self):
+        f = Line(2, 0)
+        self.assertEqual(f.Y(2), 4)
+        self.assertEqual(f.Y(-2), -4)
+        self.assertNotEqual(f.Y(-2), -5)
 
-    def test_points_on_line_x(self):
-        a = Point(1, 4)
-        b = Point(1, 8)
-        self.assertEqual(Point.center(a, b), Point(1, 6))
-    
-    def test_points_on_line_y(self):
-        a = Point(4, 4)
-        b = Point(10, 4)
-        self.assertEqual(Point.center(a, b), Point(7, 4))
-    
-    def test_str_not_empty(self):
-        a = Point(1, 1)
-        self.assertTrue(a.__str__)
+    def test_calc_x(self):
+        f = Line(2, 0)
+        self.assertEqual(f.X(4), 2)
+        self.assertEqual(f.X(-4), -2)
+        self.assertNotEqual(f.X(-4), -1)
+
+    def test_vertical_line(self):
+        vertical = Line.from_points(Point(3, 0), Point(3, 5))
+        self.assertTrue(math.isinf(vertical._Line__k))
+        self.assertTrue(vertical.contains(Point(3, 10)))
+        self.assertFalse(vertical.contains(Point(4, 10)))
+        
+        self.assertAlmostEqual(vertical.X(100), 3, places=10)
